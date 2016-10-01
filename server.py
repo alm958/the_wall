@@ -104,5 +104,13 @@ def login():
         flash("The password did not match that for " + email +". Please check the password.")
         return render_template('login.html', fields = request.form)
 
+@app.route('/comment', methods=['POST'])
+def new_comment():
+    comment_query = "INSERT INTO comments (comment, message_id, user_id, created_at, updated_at) VALUES(:comment, :msg_id, :user_id, NOW(), NOW());"
+    comment_data = {'comment':request.form['comment'], 'msg_id' :request.form['message_id'], 'user_id' :session['userid']['id']}
+    mysql.query_db(comment_query, comment_data)
+    return redirect('/main')
+
+
 if __name__ == "__main__":
     app.run(debug=True)

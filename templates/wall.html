@@ -22,9 +22,10 @@
                     </div>
                 {% else %}
                     <div class="comment">
-                        <p>Add comment:</p>
                         <form class="new_comment" action="/comment" method="post">
-                            <input type="textarea" name="name" value="">
+                            <textarea class="form-control" type='text' name='comment' rows="2" cols="60"></textarea><br>
+                            <input type="submit" name="submit" value="Post a comment">
+                            <input type="hidden" name='message_id' value={{wall_content[i - 1]['msg_id']}}>
                         </form>
                     </div>
                     <div class="message">
@@ -37,6 +38,15 @@
                             <p class='comment_txt'>{{wall_content[i]['com']}}</p>
                         </div>
                     {% endif%}
+                {% endif%}
+                {% if i == ((wall_content|length) - 1)  %}
+                <div class="comment">
+                    <form class="new_comment" action="/comment" method="post">
+                        <textarea class="form-control" type='text' name='comment' rows="2" cols="60"></textarea><br>
+                        <input type="submit" name="submit" value="Post a comment">
+                        <input type="hidden" name='message_id' value={{wall_content[i]['msg_id']}}>
+                    </form>
+                </div>
                 {% endif%}
             {% endfor %}
         </div>
