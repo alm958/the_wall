@@ -1,0 +1,44 @@
+<html>
+    <head>
+       <title>The Wall</title>
+       <link rel="stylesheet" type="text/css" href="../static/styles/master.css">
+    </head>
+    <body>
+        <header>
+                <p>CodingDojo Wall</p>
+                <form class='logout' action="/logout" method="post"> Welcome {{name}}  <input class='logout' type="submit" name="logout" value="logout"></form>
+        </header>
+        <div class="main">
+            {% for i in range(wall_content | length)%}
+                {% if i == 0 %}
+                    <div class="message">
+                        <p class='name_date'>{{wall_content[i]['msg_aut']}} {{wall_content[i]['msg_date']}}</p>
+                        <p class='message_txt'>{{wall_content[i]['msg']}}</p>
+                    </div>
+                {% elif wall_content[i]['msg_id'] == wall_content[i - 1]['msg_id']%}
+                    <div class="comment">
+                        <p class='name_date'>{{wall_content[i]['com_aut']}} {{wall_content[i]['com_date']}}</p>
+                        <p class='comment_txt'>{{wall_content[i]['com']}}</p>
+                    </div>
+                {% else %}
+                    <div class="comment">
+                        <p>Add comment:</p>
+                        <form class="new_comment" action="/comment" method="post">
+                            <input type="textarea" name="name" value="">
+                        </form>
+                    </div>
+                    <div class="message">
+                        <p class='name_date'>{{wall_content[i]['msg_aut']}} {{wall_content[i]['msg_date']}}</p>
+                        <p class='message_txt'>{{wall_content[i]['msg']}}</p>
+                    </div>
+                    {% if not wall_content[i]['com_id'] == None %}
+                        <div class="comment">
+                            <p class='name_date'>{{wall_content[i]['com_aut']}} {{wall_content[i]['com_date']}}</p>
+                            <p class='comment_txt'>{{wall_content[i]['com']}}</p>
+                        </div>
+                    {% endif%}
+                {% endif%}
+            {% endfor %}
+        </div>
+    </body>
+</html>
