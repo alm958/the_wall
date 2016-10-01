@@ -111,6 +111,13 @@ def new_comment():
     mysql.query_db(comment_query, comment_data)
     return redirect('/main')
 
+@app.route('/message', methods=['POST'])
+def new_message():
+    message_query = "INSERT INTO messages (message, user_id, created_at, updated_at) VALUES(:message, :user_id, NOW(), NOW());"
+    message_data = {'message':request.form['message'], 'user_id' :session['userid']['id']}
+    mysql.query_db(message_query, message_data)
+    return redirect('/main')
+
 
 if __name__ == "__main__":
     app.run(debug=True)
